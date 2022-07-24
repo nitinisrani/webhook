@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css' ) }}">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <div id="main"></div>
+    </section>
+    
+    <script>
+        const updateFunc = () =>{
+            const ele = document.getElementById('main')
+            console.log(ele.innerHTML)
+            fetch("{{ url_for('Webhook.presenter') }}")
+            .then(Response => Response.json())
+            .then(data => {
+                    ele.innerHTML = data.data.map(element => {
+                        switch(element.action){
+                            case 'PUSH':
+                                return `<p>"${element.author}" pushed to "${element.to_branch}" on "${element.timestamp}"</p>`
+                                break
+                            case 'PULL_REQUEST':
+                                return `<p>"${element.author}" submitted a pull request from "${element.from_branch}" to "${element.to_branch}" on "${element.timestamp}"</p>`
+                                break
+                            case 'MARGE': 
+                                return `<p>"${element.author}" mearge branch "${element.from_branch}" to "${element.to_branch}" on "${element.timestamp}"</p>`
+                        }       
+                    }).join('')
+                }
+            )
+        }
+        
+        updateFunc()
+        setInterval(updateFunc, 15000)
+    </script>
+</body>
+</html>

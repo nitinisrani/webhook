@@ -1,0 +1,25 @@
+
+section{
+    background-color: rgb(231, 233, 238);
+    height: 100vh;
+    display: grid;
+    align-items: center;
+}
+
+div{
+    background-color: white;
+    box-shadow: 1px 1px 30px rgb(13, 20, 32);
+    border-radius: 2%;
+    width: max-content;
+    height: max-content;
+    margin: auto;
+    margin-bottom: auto;
+    /* display: flex; */
+}
+
+p{
+    padding: 0.5em;
+    margin: auto;
+    text-align: left;
+    font-size: large;
+}
